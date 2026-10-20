@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Prompt: CI must run on GitLab only, GitHub is just a push mirror.
 
 ### Changed
+- CI: `check` job now uses the `composer:2` image (the custom registry image does not exist); pipelines run on merge requests and the `develop` and `main` branches, never on tags.
 - Removed the GitHub Actions workflow (`.github/`); `.gitlab-ci.yml` now runs the same checks (`php -l`, `composer validate`, PHPUnit, PHPCS, PHPStan) on merge requests and the default branch.
 
 ## [1.0.0] - 2026-10-20

@@ -1,18 +1,20 @@
 # GitLab is the source of truth (GitHub is only a push mirror), so CI runs here only.
-# Pipelines: merge requests and the default branch; no tag pipelines, no releases.
+# Pipelines: merge requests and the develop/main branches; no tag pipelines, no releases.
 stages: [check]
 
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH =~ /^(develop|main)$/
 
 variables:
   COMPOSER_CACHE_DIR: "$CI_PROJECT_DIR/.cache/composer"
 
 check:
   stage: check
-  image: registry.gitlab.motivar.io/motivar/ci/unified:latest
+  image: composer:2
   tags: [priority]
   cache:
     key:
