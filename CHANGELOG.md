@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+Prompt: CI must run on GitLab only, GitHub is just a push mirror.
+
+### Changed
+- Removed the GitHub Actions workflow (`.github/`); `.gitlab-ci.yml` now runs the same checks (`php -l`, `composer validate`, PHPUnit, PHPCS, PHPStan) on merge requests and the default branch.
+
 ## [1.0.0] - 2026-10-20
 
 Prompt: rebrand the library from gnnpls/wp-kit to Mammoth WP conventions (`mammothwp/wp-kit`).
