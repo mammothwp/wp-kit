@@ -1,5 +1,5 @@
-# Syntax-check every tracked PHP file and validate composer.json on the
-# lowest and highest supported PHP versions.
+# Syntax, composer.json, tests, PHPCS and PHPStan on the lowest and highest
+# supported PHP versions.
 name: lint
 
 on:
@@ -24,3 +24,7 @@ jobs:
         run: git ls-files -z -- '*.php' | xargs -0 -n1 php -l > /dev/null
       - name: composer.json
         run: composer validate --strict --no-check-lock
+      - run: composer update --no-interaction --prefer-dist
+      - run: vendor/bin/phpunit
+      - run: vendor/bin/phpcs
+      - run: vendor/bin/phpstan analyse --memory-limit=1G --no-progress

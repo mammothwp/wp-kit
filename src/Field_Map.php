@@ -6,11 +6,11 @@
  * `## OPTIONS` text for `wp help`), and a JSON Schema property. The mapping
  * lives here so the surfaces can never disagree about a parameter.
  *
- * @package Gnnpls\WP
+ * @package MammothWP\WpKit
  * @since   0.1.0
  */
 
-namespace Gnnpls\WP;
+namespace MammothWP\WpKit;
 
 if (!defined('ABSPATH')) {
     exit;

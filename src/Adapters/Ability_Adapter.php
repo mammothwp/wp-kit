@@ -2,17 +2,18 @@
 /**
  * Registers a Resource's operations with the WordPress Abilities API.
  *
- * @package Gnnpls\WP
+ * @package MammothWP\WpKit
  * @since   0.1.0
  */
 
-namespace Gnnpls\WP\Adapters;
+namespace MammothWP\WpKit\Adapters;
 
-use Gnnpls\WP\Confirm;
-use Gnnpls\WP\Context;
-use Gnnpls\WP\Field_Map;
-use Gnnpls\WP\Operation;
-use Gnnpls\WP\Resource;
+use MammothWP\WpKit\Compat\Legacy_Hooks;
+use MammothWP\WpKit\Confirm;
+use MammothWP\WpKit\Context;
+use MammothWP\WpKit\Field_Map;
+use MammothWP\WpKit\Operation;
+use MammothWP\WpKit\Resource;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -94,6 +95,7 @@ final class Ability_Adapter
             $definitions[$this->resource->ability_category() . '/' . $operation->ability_slug()] = $this->definition($operation);
         }
 
+        $definitions = Legacy_Hooks::filter('mmwp_kit_ability_definitions', [$definitions, $this->resource]);
         /**
          * Filter the ability definitions of one resource before registration.
          *
@@ -102,7 +104,7 @@ final class Ability_Adapter
          *
          * @since 0.1.0
          */
-        $definitions = apply_filters('mwp_ability_definitions', $definitions, $this->resource);
+        $definitions = apply_filters('mmwp_kit_ability_definitions', $definitions, $this->resource);
 
         foreach ($definitions as $name => $args) {
             wp_register_ability($name, $args);

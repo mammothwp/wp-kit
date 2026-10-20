@@ -4,14 +4,16 @@
  *
  * A resolver may be `true` (public), `false` (never), a capability string,
  * or a callable `fn(Operation $op, array $input, Context $ctx)` returning
- * one of those. The result passes through `mwp_operation_capability` so a
+ * one of those. The result passes through `mmwp_kit_operation_capability` so a
  * host plugin can override it centrally.
  *
- * @package Gnnpls\WP
+ * @package MammothWP\WpKit
  * @since   0.1.0
  */
 
-namespace Gnnpls\WP;
+namespace MammothWP\WpKit;
+
+use MammothWP\WpKit\Compat\Legacy_Hooks;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -38,6 +40,7 @@ final class Capability
             : $resolver;
 
         if (function_exists('apply_filters')) {
+            $resolved = Legacy_Hooks::filter('mmwp_kit_operation_capability', [$resolved, $op, $input, $ctx]);
             /**
              * Filter the capability required by an operation.
              *
@@ -48,7 +51,7 @@ final class Capability
              *
              * @since 0.1.0
              */
-            $resolved = apply_filters('mwp_operation_capability', $resolved, $op, $input, $ctx);
+            $resolved = apply_filters('mmwp_kit_operation_capability', $resolved, $op, $input, $ctx);
         }
 
         return $resolved;
@@ -96,7 +99,7 @@ final class Capability
         $anonymous = function_exists('is_user_logged_in') && !is_user_logged_in();
 
         return new \WP_Error(
-            'mwp_forbidden',
+            'mmwp_forbidden',
             'You do not have permission to perform this action.',
             ['status' => $anonymous ? 401 : 403]
         );

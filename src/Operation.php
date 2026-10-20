@@ -6,11 +6,13 @@
  * `run()` is the single execution path shared by every surface. Adapters
  * only translate their transport's input and output around it.
  *
- * @package Gnnpls\WP
+ * @package MammothWP\WpKit
  * @since   0.1.0
  */
 
-namespace Gnnpls\WP;
+namespace MammothWP\WpKit;
+
+use MammothWP\WpKit\Compat\Legacy_Hooks;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -526,7 +528,8 @@ final class Operation
              *
              * @since 0.1.0
              */
-            do_action('mwp_operation_before_run', $this, $normalized, $ctx);
+            do_action('mmwp_kit_operation_before_run', $this, $normalized, $ctx);
+            Legacy_Hooks::action('mmwp_kit_operation_before_run', [$this, $normalized, $ctx]);
         }
 
         $result = $this->invoke($normalized, $ctx);
@@ -536,6 +539,7 @@ final class Operation
         }
 
         if (function_exists('apply_filters')) {
+            $result = Legacy_Hooks::filter('mmwp_kit_operation_result', [$result, $this, $normalized, $ctx]);
             /**
              * Filter an operation's result before it reaches the surface adapter.
              *
@@ -546,7 +550,7 @@ final class Operation
              *
              * @since 0.1.0
              */
-            $result = apply_filters('mwp_operation_result', $result, $this, $normalized, $ctx);
+            $result = apply_filters('mmwp_kit_operation_result', $result, $this, $normalized, $ctx);
         }
 
         return $result;
@@ -609,7 +613,7 @@ final class Operation
             $service = $this->resource->service_instance();
         }
         if ($service === null || !method_exists($service, $this->handler)) {
-            return new \WP_Error('mwp_no_handler', sprintf('No handler "%s" for operation "%s".', $this->handler, $this->name), ['status' => 500]);
+            return new \WP_Error('mmwp_no_handler', sprintf('No handler "%s" for operation "%s".', $this->handler, $this->name), ['status' => 500]);
         }
 
         try {
@@ -650,7 +654,7 @@ final class Operation
             $data['detail'] = $detail;
         }
 
-        return new \WP_Error('mwp_operation_failed', sprintf('Operation "%s" failed.', $this->name), $data);
+        return new \WP_Error('mmwp_operation_failed', sprintf('Operation "%s" failed.', $this->name), $data);
     }
 
     /**

@@ -5,6 +5,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-10-20
+
+Prompt: rebrand the library from gnnpls/wp-kit to Mammoth WP conventions (`mammothwp/wp-kit`).
+
+### Changed
+- Package renamed to `mammothwp/wp-kit`; homepage https://mammothwp.com, source https://github.com/mammothwp/wp-kit, contact info@mammothwp.com. Composer `replace` blocks installing it next to `gnnpls/wp-kit`.
+- PHP namespace root is now `MammothWP\WpKit\`.
+- Hooks are now `mmwp_kit_*`; WP_Error codes are now `mmwp_*`.
+- Dev tooling added: PHPUnit, PHPCS (WPCS prefixes `mmwp` / `MammothWP`) and PHPStan, with `composer lint|test|phpcs|phpstan` scripts.
+
+### Added
+- `compat.php` (Composer `files` autoload) and `src/Compat/`: lazy `class_alias()` shims for every 0.x class (deprecation notice once per class) and `Legacy_Hooks`, which fires the old hook names through `do_action_deprecated()` / `apply_filters_deprecated()`.
+- Tests proving the class aliases and hook bridges.
+- `docs/BRAND.md`.
+
+### Backwards compatibility
+- Old class names and old hook names keep working and are removed in 2.0.0.
+- Not aliased: the `mwp_*` error codes (they are strings, not symbols); consumers comparing `WP_Error::get_error_code()` must switch to the `mmwp_*` codes.
+- The library has no global functions and persists no options, transients or meta, so there is nothing to wrap or migrate.
+- A plugin that bundles an old `gnnpls/wp-kit` copy and loads before this one still declares its own `Gnnpls\WP\Kit`; both loaders then run side by side until that plugin upgrades.
+
+### Upgrading from gnnpls/wp-kit
+
+| Old | New |
+|---|---|
+| `gnnpls/wp-kit` (Composer) | `mammothwp/wp-kit` |
+| `Gnnpls\WP\Kit` | `MammothWP\WpKit\Kit` |
+| `Gnnpls\WP\Registry` | `MammothWP\WpKit\Registry` |
+| `Gnnpls\WP\Resource` | `MammothWP\WpKit\Resource` |
+| `Gnnpls\WP\Operation` | `MammothWP\WpKit\Operation` |
+| `Gnnpls\WP\Field` | `MammothWP\WpKit\Field` |
+| `Gnnpls\WP\Field_Map` | `MammothWP\WpKit\Field_Map` |
+| `Gnnpls\WP\Context` | `MammothWP\WpKit\Context` |
+| `Gnnpls\WP\Capability` | `MammothWP\WpKit\Capability` |
+| `Gnnpls\WP\Confirm` | `MammothWP\WpKit\Confirm` |
+| `Gnnpls\WP\Inventory` | `MammothWP\WpKit\Inventory` |
+| `Gnnpls\WP\Adapters\Rest_Adapter` | `MammothWP\WpKit\Adapters\Rest_Adapter` |
+| `Gnnpls\WP\Adapters\Cli_Adapter` | `MammothWP\WpKit\Adapters\Cli_Adapter` |
+| `Gnnpls\WP\Adapters\Ability_Adapter` | `MammothWP\WpKit\Adapters\Ability_Adapter` |
+| `mwp_kit_booted` | `mmwp_kit_booted` |
+| `mwp_registry_ready` | `mmwp_kit_registry_ready` |
+| `mwp_operation_capability` | `mmwp_kit_operation_capability` |
+| `mwp_operation_before_run` | `mmwp_kit_operation_before_run` |
+| `mwp_operation_result` | `mmwp_kit_operation_result` |
+| `mwp_ability_definitions` | `mmwp_kit_ability_definitions` |
+| error `mwp_invalid_param` | `mmwp_invalid_param` |
+| error `mwp_forbidden` | `mmwp_forbidden` |
+| error `mwp_confirm_required` | `mmwp_confirm_required` |
+| error `mwp_no_handler` | `mmwp_no_handler` |
+| error `mwp_operation_failed` | `mmwp_operation_failed` |
+
 ## [0.4.0] - 2026-10-13
 
 Prompt: expose wp-kit consumers (EWP, Filox) to MCP clients at once — "go ahead with the mcp.public change", after comparing an own MCP server with Agent Connector.

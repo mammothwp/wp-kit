@@ -2,11 +2,11 @@
 /**
  * Describes which surface is invoking an operation and as whom.
  *
- * @package Gnnpls\WP
+ * @package MammothWP\WpKit
  * @since   0.1.0
  */
 
-namespace Gnnpls\WP;
+namespace MammothWP\WpKit;
 
 if (!defined('ABSPATH')) {
     exit;

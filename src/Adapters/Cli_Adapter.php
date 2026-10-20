@@ -2,16 +2,16 @@
 /**
  * Registers a Resource's operations as WP-CLI commands.
  *
- * @package Gnnpls\WP
+ * @package MammothWP\WpKit
  * @since   0.1.0
  */
 
-namespace Gnnpls\WP\Adapters;
+namespace MammothWP\WpKit\Adapters;
 
-use Gnnpls\WP\Context;
-use Gnnpls\WP\Field_Map;
-use Gnnpls\WP\Operation;
-use Gnnpls\WP\Resource;
+use MammothWP\WpKit\Context;
+use MammothWP\WpKit\Field_Map;
+use MammothWP\WpKit\Operation;
+use MammothWP\WpKit\Resource;
 
 if (!defined('ABSPATH')) {
     exit;

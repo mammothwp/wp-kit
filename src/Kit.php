@@ -1,6 +1,6 @@
 <?php
 /**
- * Version-gated loader for the Gnnpls WP kit.
+ * Version-gated loader for the Mammoth WP Kit.
  *
  * Several active plugins may each bundle a copy of the kit. Every copy
  * registers itself here; on `plugins_loaded` (priority -100) the newest
@@ -9,11 +9,11 @@
  * This class must stay backwards compatible: whichever plugin loads first
  * declares it, even when a newer copy later wins the autoloader.
  *
- * @package Gnnpls\WP
+ * @package MammothWP\WpKit
  * @since   0.1.0
  */
 
-namespace Gnnpls\WP;
+namespace MammothWP\WpKit;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -26,7 +26,7 @@ final class Kit
      *
      * @var string
      */
-    const PREFIX = 'Gnnpls\\WP\\';
+    const PREFIX = 'MammothWP\\WpKit\\';
 
     /**
      * Registered copies: absolute path => version string.
@@ -138,7 +138,8 @@ final class Kit
              *
              * @since 0.1.0
              */
-            do_action('mwp_kit_booted', $path, self::version());
+            do_action('mmwp_kit_booted', $path, self::version());
+            \MammothWP\WpKit\Compat\Legacy_Hooks::action('mmwp_kit_booted', [$path, self::version()]);
         }
 
         $queue       = self::$ready;

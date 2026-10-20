@@ -4,11 +4,11 @@
  *
  * Feeds parity tests, generated test-manifest coverage and route inventories.
  *
- * @package Gnnpls\WP
+ * @package MammothWP\WpKit
  * @since   0.1.0
  */
 
-namespace Gnnpls\WP;
+namespace MammothWP\WpKit;
 
 if (!defined('ABSPATH')) {
     exit;

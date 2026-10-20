@@ -6,11 +6,11 @@
  * else from here. A resource with no REST namespace, CLI base or ability
  * category simply is not exposed on that surface.
  *
- * @package Gnnpls\WP
+ * @package MammothWP\WpKit
  * @since   0.1.0
  */
 
-namespace Gnnpls\WP;
+namespace MammothWP\WpKit;
 
 if (!defined('ABSPATH')) {
     exit;
