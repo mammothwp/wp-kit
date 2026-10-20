@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-`mammothwp/wp-kit` — a dependency-free PHP 7.4+ library (namespace `MammothWP\WpKit`, hook prefix `mmwp_kit_`, error-code prefix `mmwp_`). A consumer declares a WordPress feature once as a `Resource` of `Operation`s with `Field`s, and the three adapters project it onto REST routes, WP-CLI commands and the WordPress Abilities API. Source of truth is GitLab `mammothwp/wp-kit`; `https://github.com/mammothwp/wp-kit` is a push mirror and Packagist reads it. Public identity is Mammoth WP <info@mammothwp.com>, https://mammothwp.com; brand rules are in `docs/BRAND.md` (prefixes `mmwp_`/`mmwp-`, never the word "WordPress" in a name or prefix). Use `my-plugin` in examples.
+`mammothwp/wp-kit` — a dependency-free PHP 7.4+ library (namespace `MammothWP\WpKit`, hook prefix `mmwp_kit_`, error-code prefix `mmwp_`). A consumer declares a WordPress feature once as a `Resource` of `Operation`s with `Field`s, and the three adapters project it onto REST routes, WP-CLI commands and the WordPress Abilities API. Source of truth is GitLab `mammothwp/wp-kit`; `https://github.com/mammothwp/wp-kit` is a push mirror and Packagist reads it. Public identity is Mammoth WP <info@mammothwp.com>, https://mammothwp.com; brand rules are in `docs/BRAND.md` (prefixes `mmwp_` and the hyphenated form, never the word "WordPress" in a name or prefix). Use `my-plugin` in examples.
 
 PHPUnit tests live in `tests/` (fake hook API in `tests/stubs.php`); PHPCS (WPCS prefixes `mmwp`/`MammothWP`) and PHPStan run from `phpcs.xml.dist` / `phpstan.neon.dist`. `.gitlab-ci.yml` (GitLab CI only; GitHub is a mirror) runs `php -l`, `composer validate --strict`, PHPUnit, PHPCS and PHPStan. `develop` is the working branch; `main` is release-only and the only branch mirrored to GitHub.
 
@@ -82,7 +82,3 @@ All custom hooks are `mmwp_kit_`-prefixed and documented WP-core style above eac
 - Every file, class and public method has a docblock with `@since`; every file starts with the `ABSPATH` guard.
 - WordPress functions are always guarded with `function_exists()`/`class_exists()` (`do_action`, `apply_filters`, `WP_CLI`, `register_rest_route`, `wp_register_ability`) so the classes can be constructed in isolation.
 - `CHANGELOG.md` entries record the originating prompt/intent and a "Backwards compatibility" note when relevant.
-
-## Compat layer (removed in 2.0.0)
-
-`compat.php` (Composer `files`) registers `Compat\Legacy_Aliases`, a lazy autoloader that `class_alias()`es the 0.x `Gnnpls\WP\*` names to the new classes and calls `_deprecated_class()` once per class. `Compat\Legacy_Hooks` fires the old `mwp_*` hooks after each new one through `do_action_deprecated()`/`apply_filters_deprecated()`. A new public class must be added to `Legacy_Aliases::CLASSES` only if it existed in 0.x; new hooks need no legacy twin. The `gnnpls`/`mwp_` strings are allowed only in `src/Compat/`, composer `replace`, tests of the shims and the CHANGELOG.

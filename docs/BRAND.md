@@ -28,7 +28,7 @@ asset templates; never copy hex values or assets into product code by hand.
 |---|---|
 | PHP namespace | `MammothWP\` |
 | PHP globals, options, transients, cron hooks, meta keys, hooks | `mmwp_` (library hooks: `mmwp_kit_`) |
-| CSS classes, JS/CSS handles, HTML ids | `mmwp-` |
+| CSS classes, JS/CSS handles, HTML ids | `mmwp` followed by a hyphen |
 | REST namespace | `mmwp/v1` |
 | WP-CLI root | `wp mmwp` |
 | Abilities | `mmwp/*` |

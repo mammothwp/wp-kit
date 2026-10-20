@@ -14,6 +14,5 @@ define('ABSPATH', __DIR__ . '/');
 
 require __DIR__ . '/stubs.php';
 require dirname(__DIR__) . '/bootstrap.php';
-require dirname(__DIR__) . '/compat.php';
 
 \MammothWP\WpKit\Kit::boot();
