@@ -1,0 +1,27 @@
+# GitLab is the source of truth (GitHub is only a push mirror), so CI runs here only.
+# Pipelines: merge requests and the default branch; no tag pipelines, no releases.
+stages: [check]
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+variables:
+  COMPOSER_CACHE_DIR: "$CI_PROJECT_DIR/.cache/composer"
+
+check:
+  stage: check
+  image: registry.gitlab.motivar.io/motivar/ci/unified:latest
+  tags: [priority]
+  cache:
+    key:
+      files: [composer.json]
+    paths: [.cache/composer]
+  script:
+    - git ls-files -z -- '*.php' | xargs -0 -n1 php -l > /dev/null
+    - composer validate --strict --no-check-lock
+    - composer update --no-interaction --prefer-dist   # library: no lock file
+    - vendor/bin/phpunit
+    - vendor/bin/phpcs
+    - vendor/bin/phpstan analyse --memory-limit=1G --no-progress

@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `mammothwp/wp-kit` — a dependency-free PHP 7.4+ library (namespace `MammothWP\WpKit`, hook prefix `mmwp_kit_`, error-code prefix `mmwp_`). A consumer declares a WordPress feature once as a `Resource` of `Operation`s with `Field`s, and the three adapters project it onto REST routes, WP-CLI commands and the WordPress Abilities API. Source of truth is GitLab `mammothwp/wp-kit`; `https://github.com/mammothwp/wp-kit` is a push mirror and Packagist reads it. Public identity is Mammoth WP <info@mammothwp.com>, https://mammothwp.com; brand rules are in `docs/BRAND.md` (prefixes `mmwp_`/`mmwp-`, never the word "WordPress" in a name or prefix). Use `my-plugin` in examples.
 
-PHPUnit tests live in `tests/` (fake hook API in `tests/stubs.php`); PHPCS (WPCS prefixes `mmwp`/`MammothWP`) and PHPStan run from `phpcs.xml.dist` / `phpstan.neon.dist`. `.github/workflows/lint.yml` runs `php -l`, `composer validate --strict`, PHPUnit, PHPCS and PHPStan.
+PHPUnit tests live in `tests/` (fake hook API in `tests/stubs.php`); PHPCS (WPCS prefixes `mmwp`/`MammothWP`) and PHPStan run from `phpcs.xml.dist` / `phpstan.neon.dist`. `.gitlab-ci.yml` (GitLab CI only; GitHub is a mirror) runs `php -l`, `composer validate --strict`, PHPUnit, PHPCS and PHPStan.
 
 ## Commands
 
