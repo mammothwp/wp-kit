@@ -5,11 +5,11 @@
  *
  * Fields are value objects: every fluent setter returns a modified clone.
  *
- * @package Gnnpls\WP
+ * @package MammothWP\WpKit
  * @since   0.1.0
  */
 
-namespace Gnnpls\WP;
+namespace MammothWP\WpKit;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -789,7 +789,7 @@ final class Field
     private function error($code, $message)
     {
         return new \WP_Error(
-            'mwp_invalid_param',
+            'mmwp_invalid_param',
             sprintf('%s %s.', $this->name, $message),
             ['status' => 400, 'param' => $this->name, 'reason' => $code]
         );

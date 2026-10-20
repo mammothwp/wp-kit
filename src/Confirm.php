@@ -6,11 +6,11 @@
  * so destructive operations may demand a literal `confirm: true`. On the
  * CLI the adapter maps `--yes` onto the same flag.
  *
- * @package Gnnpls\WP
+ * @package MammothWP\WpKit
  * @since   0.1.0
  */
 
-namespace Gnnpls\WP;
+namespace MammothWP\WpKit;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -56,7 +56,7 @@ final class Confirm
         }
 
         return new \WP_Error(
-            'mwp_confirm_required',
+            'mmwp_confirm_required',
             'This action permanently changes data. Pass confirm: true (or --yes on the command line) to proceed.',
             ['status' => 400]
         );
